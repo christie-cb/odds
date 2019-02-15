@@ -1,0 +1,6 @@
+{
+  "test_scraper.py::test_end_to_end": true,
+  "test_scraper.py::test_get_runner": true,
+  "test_scraper.py::test_get_runner_info": true,
+  "test_scraper.py::test_get_runners": true
+}

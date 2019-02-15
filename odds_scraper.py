@@ -5,13 +5,13 @@ first_url = 'https://easyodds.com/horse-racing#'
 
 def get_html(url):
     results = requests.get(url)
-    html = bs4.BeautifulSoup(results.text)
+    html = bs4.BeautifulSoup(results.text, "html.parser")
     return html
 
-def get_gb_racecard_urls(html):
+def get_gb_urls(html):
     racecard = html.select('div.racecard')
     gb_racecard = str(racecard[0])
-    gb_html = bs4.BeautifulSoup(gb_racecard)
+    gb_html = bs4.BeautifulSoup(gb_racecard, "html.parser")
     gb_matches = gb_html.select('table.matches-list')
     racecard_urls = []
     for match in gb_matches:
@@ -22,9 +22,8 @@ def get_gb_racecard_urls(html):
 
 def get_bet_table(racecard_html):
     bet_table = racecard_html.find_all('table')[1]
-    bet_body = bet_table.tbody
-    bets = bet_body.find_all('tr')
-    return bets
+    table_body = bet_table.tbody
+    return table_body 
 
 def get_horse_names(bet_table):
     names = []
@@ -34,17 +33,15 @@ def get_horse_names(bet_table):
             names.append(name)
     return names
 
-def get_best_price(bet_table):
-    for bet in bet_table:
-        if 'tr-odds' in bet['class']:
-            odds = bet.find_all('td')
-    return odds
-
 
 if __name__ == '__main__':
     html = get_html(first_url)
-    gb_cards = get_gb_racecard_urls(html)
+    gb_cards = get_gb_urls(html)
     early_race = gb_cards[0]
     early_html = get_html(early_race)
     early_bets = get_bet_table(early_html)
-    early_horses = get_horse_names(early_bets)
+    for runner in early_bets:
+        available_odds = runner.find_all('td')
+        for odd in available_odds:
+            if 'bg-yellow' in odd['class']:
+                print(odd)
