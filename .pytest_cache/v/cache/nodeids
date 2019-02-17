@@ -1,5 +1,6 @@
 [
   "test_scraper.py::test_end_to_end",
+  "test_scraper.py::test_get_gb_urls",
   "test_scraper.py::test_get_html",
   "test_scraper.py::test_get_table",
   "test_scraper.py::test_get_runners",

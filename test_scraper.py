@@ -23,6 +23,16 @@ def test_end_to_end():
     assert 'horse-name' in str(runner)
     assert type(html) == bs4.BeautifulSoup
 
+def test_get_gb_urls():
+    html = '''<div class="racecard" data-group="united-kingdom">
+    <table class="matches-list">
+    <thead>
+    <tr class="racecard-row"><a href="URL">
+    '''
+    html = bs4.BeautifulSoup(html, "html.parser")
+    urls = odds_scraper.get_gb_urls(html)
+    assert 'URL' in str(urls[0])
+
 def test_get_html():
     url = 'https://easyodds.com/horse-racing/'
     html = odds_scraper.get_html(url)
