@@ -24,17 +24,25 @@ def get_bet_table(racecard_html):
     rows = table.find_all('tr', class_="selection-row-non-exchange")
     return rows
 
+def replace_non_runners(subrow):
+    if subrow is None:
+        subrow = '<td data-decimal="0">'
+        replacement = bs4.BeautifulSoup(subrow, "html.parser")
+    else:
+        replacement = subrow    
+    return replacement
+
 def get_runners(rows):
     runners = []
     for row in rows:
         runner_name = row.get('data-selection-name')
         best_price_subrow = row.find('td', class_="bg-yellow") 
-        if best_price_subrow is not None:  # its only None when NR
-            best_price = best_price_subrow.get('data-decimal')
-            runners.append({
-                'best_price': best_price,
-                'runner_name': runner_name
-            })
+        best_price_subrow = replace_non_runners(best_price_subrow)
+        best_price = best_price_subrow.get('data-decimal')
+        runners.append({
+            'best_price': best_price,
+            'runner_name': runner_name
+        })
     return runners
 
 

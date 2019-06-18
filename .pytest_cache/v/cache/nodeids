@@ -1,8 +1,7 @@
 [
-  "test_scraper.py::test_end_to_end",
-  "test_scraper.py::test_get_gb_urls",
-  "test_scraper.py::test_get_html",
-  "test_scraper.py::test_get_table",
-  "test_scraper.py::test_get_runners",
-  "test_scraper.py::test_get_runner_info"
+  "test_compare.py::test_end_to_end",
+  "test_compare.py::test_parse_preds",
+  "test_compare.py::test_join_runners",
+  "test_compare.py::test_find_bets",
+  "test_compare.py::test_get_ev"
 ]
