@@ -8,7 +8,6 @@ def get_html(url):
     html = bs4.BeautifulSoup(results.text, "html.parser")
     return html
 
-#matches = events or horse races (just the term the website uses)
 def get_gb_urls(html):
     matches = html.find('div', class_="racecard").find_all('a')
     urls = []
