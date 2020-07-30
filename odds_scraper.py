@@ -2,7 +2,6 @@ import requests
 import bs4
 import time
 
-first_url = 'https://easyodds.com/horse-racing#'
 
 def get_html(url):
     results = requests.get(url)
@@ -47,6 +46,8 @@ def get_runners(rows):
 
 
 if __name__ == '__main__':
+    
+    first_url = 'https://easyodds.com/horse-racing#'
     start = time.time()
     html = get_html(first_url)
     gb_cards = get_gb_urls(html)
