@@ -9,7 +9,8 @@ def get_html(url):
     return html
 
 def get_gb_urls(html):
-    matches = html.find('div', class_="racecard").find_all('a')
+    contents = html.find('div', class_="row row-no horse-racing-holder")
+    matches = contents.find_all('id="horse-racing-menu-link"')
     urls = []
     for match in matches:
         url = match.get('href')
