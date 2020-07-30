@@ -1,21 +1,20 @@
 import odds_scraper
 import bs4
 
-end_to_end_html = '''<html>
-    <body>
-    <div class="table-container">
-    <table id="not the one">
-    <table id="betsTable">
-    <tbody>
-    <tr class="selection-row-non-exchange tr-odds" data-selection-name="HORSE-NAME">
-    <td class="number-table odds bg-yellow" data-decimal="3.25">
-    <td class="number-table odds" data-decimal="3.0">
-    '''
-
 def test_end_to_end():
+    HTML = '''<html>
+        <body>
+        <div class="table-container">
+        <table id="not the one">
+        <table id="betsTable">
+        <tbody>
+        <tr class="selection-row-non-exchange tr-odds" data-selection-name="HORSE-NAME">
+        <td class="number-table odds bg-yellow" data-decimal="3.25">
+        <td class="number-table odds" data-decimal="3.0">
+    '''
     url = 'https://easyodds.com/horse-racing/'
     html = odds_scraper.get_html(url)
-    e_html = bs4.BeautifulSoup(end_to_end_html, "html.parser")
+    e_html = bs4.BeautifulSoup(HTML, "html.parser")
     table = odds_scraper.get_bet_table(e_html)
     runner = odds_scraper.get_runners(table)[0]
     assert '3.0' not in runner['best_price']
