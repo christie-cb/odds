@@ -1,7 +1,0 @@
-[
-  "test_compare.py::test_end_to_end",
-  "test_compare.py::test_parse_preds",
-  "test_compare.py::test_join_runners",
-  "test_compare.py::test_find_bets",
-  "test_compare.py::test_get_ev"
-]
