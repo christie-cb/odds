@@ -9,11 +9,11 @@ def get_html(url):
     html = bs4.BeautifulSoup(results.text, "html.parser")
     return html
 
+#matches = events or horse races (just the term the website uses)
 def get_gb_urls(html):
-    matches = html.find('div', class_="racecard")
-    matches_info = matches.find_all('a')
+    matches = html.find('div', class_="racecard").find_all('a')
     urls = []
-    for match in matches_info:
+    for match in matches:
         url = match.get('href')
         urls.append(url)
     unique_urls = list(dict.fromkeys(urls))
@@ -29,14 +29,14 @@ def replace_non_runners(subrow):
         subrow = '<td data-decimal="0">'
         replacement = bs4.BeautifulSoup(subrow, "html.parser")
     else:
-        replacement = subrow    
+        replacement = subrow
     return replacement
 
 def get_runners(rows):
     runners = []
     for row in rows:
         runner_name = row.get('data-selection-name')
-        best_price_subrow = row.find('td', class_="bg-yellow") 
+        best_price_subrow = row.find('td', class_="bg-yellow")
         best_price_subrow = replace_non_runners(best_price_subrow)
         best_price = best_price_subrow.get('data-decimal')
         runners.append({
@@ -51,10 +51,12 @@ if __name__ == '__main__':
     html = get_html(first_url)
     gb_cards = get_gb_urls(html)
     all_runners = []
+
     for race in gb_cards:
         race_html = get_html(race)
         rows = get_bet_table(race_html)
         runners = get_runners(rows)
         all_runners.append(runners)
+
     print(all_runners)
     print(time.time() - start)
